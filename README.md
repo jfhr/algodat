@@ -6,5 +6,6 @@ Algorithms and data structures from my university course.
 
 Currently implemented:
 - Sort algorithms
+  - Bubble sort
   - Insertion sort
   - Heap sort
