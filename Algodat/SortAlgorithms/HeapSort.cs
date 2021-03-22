@@ -79,12 +79,7 @@
                 }
             }
 
-            private void Swap(int a, int b)
-            {
-                int temp = array[a];
-                array[a] = array[b];
-                array[b] = temp;
-            }
+            private void Swap(int a, int b) => ArrayUtil.Swap(array, a, b);
         }
     }
 }

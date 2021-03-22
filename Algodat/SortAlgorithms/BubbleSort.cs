@@ -15,9 +15,7 @@
                 {
                     if (array[i - 1] > array[i])
                     {
-                        int temp = array[i - 1];
-                        array[i - 1] = array[i];
-                        array[i] = temp;
+                        ArrayUtil.Swap(array, i, i - 1);
                     }
                 }
             }
