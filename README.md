@@ -9,3 +9,4 @@ Currently implemented:
   - Bubble sort
   - Insertion sort
   - Heap sort
+  - Merge sort
