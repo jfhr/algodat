@@ -22,6 +22,8 @@ namespace Algodat.Test
             new[] { 1, 1, 1 },
             new[] { 1, -1, 0 },
             new[] { 3, 2, 4, 1, 5 },
+            new[] { int.MaxValue, 1, int.MaxValue, 0 },
+            new[] { int.MaxValue, 0, int.MinValue, 0, 1 },
         };
 
         [Theory]
