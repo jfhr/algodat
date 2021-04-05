@@ -3,6 +3,7 @@ using NUnit.Framework;
 
 namespace Algodat.Test
 {
+    [TestFixture(typeof(ArrayQueue<int>))]
     public class QueueTest<T> where T : IQueue<int>, new()
     {
         [DatapointSource]
@@ -21,7 +22,7 @@ namespace Algodat.Test
             for (int i = 0; i < elements.Length; i++)
             {
                 instance.Enqueue(elements[i]);
-                Assert.AreEqual(elements[i], instance.Peek());
+                Assert.AreEqual(elements[0], instance.Peek());
             }
 
             for (int i = 0; i < elements.Length; i++)
