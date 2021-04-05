@@ -31,5 +31,33 @@ namespace Algodat.Test
                 Assert.AreEqual(elements[i], instance.Dequeue());
             }
         }
+
+        [Test]
+        public void TestComplexSequence()
+        {
+            var instance = new T();
+
+            instance.Enqueue(100);
+            Assert.AreEqual(100, instance.Peek());
+
+            instance.Enqueue(200);
+            Assert.AreEqual(100, instance.Peek());
+
+            Assert.AreEqual(100, instance.Dequeue());
+
+            Assert.AreEqual(200, instance.Peek());
+
+            instance.Enqueue(300);
+            Assert.AreEqual(200, instance.Peek());
+
+            instance.Enqueue(400);
+            Assert.AreEqual(200, instance.Peek());
+            
+            Assert.AreEqual(200, instance.Dequeue());
+
+            Assert.AreEqual(300, instance.Dequeue());
+
+            Assert.AreEqual(400, instance.Dequeue());
+        }
     }
 }
