@@ -5,6 +5,9 @@
 Algorithms and data structures from my university course.
 
 Currently implemented:
+- Collections
+  - ArrayStack
+  - ArrayQueue
 - Sort algorithms
   - Bubble sort
   - Insertion sort
