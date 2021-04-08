@@ -8,6 +8,7 @@ namespace Algodat.Test
     [TestFixture(typeof(InsertionSort))]
     [TestFixture(typeof(BubbleSort))]
     [TestFixture(typeof(MergeSort))]
+    [TestFixture(typeof(QuickSort))]
     public class SortAlgorithmTest<T> where T : ISortAlgorithm, new()
     {
         [DatapointSource]
