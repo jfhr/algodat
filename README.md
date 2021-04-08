@@ -13,3 +13,4 @@ Currently implemented:
   - Insertion sort
   - Heap sort
   - Merge sort
+  - Quick sort
