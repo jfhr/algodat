@@ -22,10 +22,7 @@ namespace Algodat.SortAlgorithms
             {
                 if (span[j] <= pivot)
                 {
-                    if (i + 1 != j)
-                    {
-                        ArrayUtil.Swap(span, i + 1, j);
-                    }
+                    ArrayUtil.Swap(span, i + 1, j);
                     i++;
                 }
             }
