@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace Algodat.Test
 {
     [TestFixture(typeof(ArrayQueue<int>))]
+    [TestFixture(typeof(LinkedQueue<int>))]
     public class QueueTest<T> where T : IQueue<int>, new()
     {
         [DatapointSource]

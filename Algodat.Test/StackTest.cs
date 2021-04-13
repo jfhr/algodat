@@ -4,6 +4,7 @@ using NUnit.Framework;
 namespace Algodat.Test
 {
     [TestFixture(typeof(ArrayStack<int>))]
+    [TestFixture(typeof(LinkedStack<int>))]
     public class StackTest<T> where T : IStack<int>, new()
     {
         [DatapointSource]
