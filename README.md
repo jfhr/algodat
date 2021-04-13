@@ -14,3 +14,4 @@ Currently implemented:
   - Heap sort
   - Merge sort
   - Quick sort
+  - Radix sort
