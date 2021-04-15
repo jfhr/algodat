@@ -32,7 +32,7 @@ namespace Algodat.Test
         public void TestSort(int[] array)
         {
             var expected = new int[array.Length];
-            array.CopyTo(expected);
+            array.CopyTo(expected, 0);
             Array.Sort(expected);
 
             var instance = new T();

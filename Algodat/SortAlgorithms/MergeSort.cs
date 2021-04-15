@@ -38,14 +38,17 @@ namespace Algodat.SortAlgorithms
                 if (leftIndex >= leftCopy.Length)
                 {
                     destination[i] = rightCopy[rightIndex];
+                    rightIndex++;
                 }
-                else if (rightIndex >= rightCopy.Length || rightCopy[rightIndex] < leftCopy[leftIndex])
+                else if (rightIndex >= rightCopy.Length || rightCopy[rightIndex] > leftCopy[leftIndex])
                 {
                     destination[i] = leftCopy[leftIndex];
+                    leftIndex++;
                 }
                 else
                 {
                     destination[i] = rightCopy[rightIndex];
+                    rightIndex++;
                 }
             }
         }
