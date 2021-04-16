@@ -31,10 +31,14 @@ namespace Algodat.Test
         [Theory]
         public void TestSort(int[] array)
         {
+            var expected = new int[array.Length];
+            array.CopyTo(expected, 0);
+            Array.Sort(expected);
+
             var instance = new T();
             instance.SortAscending(array);
 
-            Assert.That(array, Is.Ordered.Ascending);
+            CollectionAssert.AreEqual(expected, array);
         }
     }
 }
