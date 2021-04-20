@@ -3,6 +3,10 @@ using NUnit.Framework;
 
 namespace Algodat.Test
 {
+    [TestFixture(typeof(LinkedHashTable<int, string>))]
+    [TestFixture(typeof(OpenAddressingWithDoubleHashingHashTable<string>))]
+    [TestFixture(typeof(OpenAddressingWithLinearProbingHashTable<int, string>))]
+    [TestFixture(typeof(OpenAddressingWithQuadraticProbingHashTable<int, string>))]
     public class HashTableTest<T> where T : IHashTable<int, string>, new()
     {
         [DatapointSource]
@@ -13,6 +17,20 @@ namespace Algodat.Test
             new[] { 300, 200, 300, 200 }
         };
 
+        private void AssertSearchResult(IHashTable<int, string> instance, int key, string expectedValue)
+        {
+            if (expectedValue == null)
+            {
+                Assert.IsFalse(instance.Search(key, out var value));
+                Assert.IsNull(value);
+            }
+            else
+            {
+                Assert.IsTrue(instance.Search(key, out var value));
+                Assert.AreEqual(expectedValue, value);
+            }
+        }
+
         [Theory]
         public void TestElementSequence(int[] elements)
         {
@@ -21,14 +39,29 @@ namespace Algodat.Test
             for (int i = 0; i < elements.Length; i++)
             {
                 instance.Insert(i, $"{i}");
-                Assert.AreEqual($"{i}", instance.Search(i));
+                AssertSearchResult(instance, i, $"{i}");
             }
 
             for (int i = 0; i < elements.Length; i++)
             {
                 instance.Remove(i);
-                Assert.IsNull(instance.Search(i));
+                AssertSearchResult(instance, i, null);
             }
+        }
+
+        [Test]
+        public void TestMultipleOverrides()
+        {
+            var instance = new T();
+
+            foreach (var s in new[] { "a", "b", "c" })
+            {
+                instance.Insert(100, s);
+                AssertSearchResult(instance, 100, s);
+            }
+
+            instance.Remove(100);
+            AssertSearchResult(instance, 100, null);
         }
 
         [Test]
@@ -37,16 +70,16 @@ namespace Algodat.Test
             var instance = new T();
 
             instance.Insert(100, "one-hundred");
-            Assert.AreEqual("one-hundred", instance.Search(100));
+            AssertSearchResult(instance, 100, "one-hundred");
 
             instance.Insert(200, "two-hundred");
-            Assert.AreEqual("two-hundred", instance.Search(200));
+            AssertSearchResult(instance, 200, "two-hundred");
 
-            instance.Insert(100, "hunded");
-            Assert.AreEqual("hundred", instance.Search(100));
+            instance.Insert(100, "hundred");
+            AssertSearchResult(instance, 100, "hundred");
 
             instance.Remove(100);
-            Assert.IsNull(instance.Search(100));
+            AssertSearchResult(instance, 100, null);
 
             for (int i = 0; i < 400; i++)
             {
@@ -55,7 +88,7 @@ namespace Algodat.Test
 
             for (int i = 0; i < 400; i++)
             {
-                Assert.AreEqual($"{i}-value", instance.Search(i));
+                AssertSearchResult(instance, i, $"{i}-value");
             }
         }
     }

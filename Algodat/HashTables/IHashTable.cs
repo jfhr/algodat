@@ -1,23 +1,21 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Algodat.HashTables
+﻿namespace Algodat.HashTables
 {
     public interface IHashTable<TKey, TValue>
     {
         /// <summary>
-        /// Return the value associated with the <paramref name="key"/>, or 
-        /// <see langword="null"/> if it is not found.
+        /// Find the value associated with the <paramref name="key"/>.
+        /// Return a boolean indicating whether the search was successful.
         /// </summary>
-        public TValue? Search([NotNull] TKey key);
+        public bool Search(TKey key, out TValue value);
 
         /// <summary>
         /// Insert the given key-value-pair.
         /// </summary>
-        public void Insert([NotNull] TKey key, [MaybeNull] TValue value);
+        public void Insert(TKey key, TValue value);
 
         /// <summary>
         /// Remove the given key, if it exists.
         /// </summary>
-        public void Remove([NotNull] TKey key);
+        public void Remove(TKey key);
     }
 }
