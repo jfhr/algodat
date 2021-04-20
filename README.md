@@ -17,3 +17,9 @@ Currently implemented:
   - Merge sort
   - Quick sort
   - Radix sort
+- Hashtables
+  - Linked hashtable
+  - Open addressing
+    - Linear probing
+    - Quadratic probing
+    - Double hashing
