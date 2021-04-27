@@ -30,10 +30,7 @@ namespace Algodat.Queues
                 start.Previous = newNode;
             }
             start = newNode;
-            if (end == null)
-            {
-                end = newNode;
-            }
+            end ??= newNode;
         }
 
         public T Peek()
