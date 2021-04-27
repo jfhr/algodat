@@ -23,3 +23,5 @@ Currently implemented:
     - Linear probing
     - Quadratic probing
     - Double hashing
+- Trees
+  - Binary search tree
