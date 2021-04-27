@@ -9,7 +9,7 @@ namespace Algodat.Test
     [TestFixture(typeof(OpenAddressingWithLinearProbingHashTable<int, string>))]
     [TestFixture(typeof(OpenAddressingWithQuadraticProbingHashTable<int, string>))]
 
-    [TestFixture(typeof(SimpleBinaryTree<int, string>))]
+    [TestFixture(typeof(BinarySearchTree<int, string>))]
     public class HashTableTest<T> where T : IHashTable<int, string>, new()
     {
         [DatapointSource]
