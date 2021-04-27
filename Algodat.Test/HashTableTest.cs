@@ -25,7 +25,6 @@ namespace Algodat.Test
             if (expectedValue == null)
             {
                 Assert.IsFalse(instance.Search(key, out var value));
-                Assert.IsNull(value);
             }
             else
             {
