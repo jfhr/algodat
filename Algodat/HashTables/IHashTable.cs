@@ -4,7 +4,10 @@
     {
         /// <summary>
         /// Find the value associated with the <paramref name="key"/>.
-        /// Return a boolean indicating whether the search was successful.
+        /// If the search is successful, returns true and sets the out
+        /// parameter to the associated value.
+        /// Otherwise, returns false, in that case, the out parameter
+        /// may be set to any value.
         /// </summary>
         public bool Search(TKey key, out TValue value);
 

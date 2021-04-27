@@ -1,4 +1,5 @@
 using Algodat.HashTables;
+using Algodat.Trees;
 using NUnit.Framework;
 
 namespace Algodat.Test
@@ -7,6 +8,8 @@ namespace Algodat.Test
     [TestFixture(typeof(OpenAddressingWithDoubleHashingHashTable<string>))]
     [TestFixture(typeof(OpenAddressingWithLinearProbingHashTable<int, string>))]
     [TestFixture(typeof(OpenAddressingWithQuadraticProbingHashTable<int, string>))]
+
+    [TestFixture(typeof(BinarySearchTree<int, string>))]
     public class HashTableTest<T> where T : IHashTable<int, string>, new()
     {
         [DatapointSource]
@@ -22,7 +25,6 @@ namespace Algodat.Test
             if (expectedValue == null)
             {
                 Assert.IsFalse(instance.Search(key, out var value));
-                Assert.IsNull(value);
             }
             else
             {
