@@ -7,6 +7,7 @@ namespace Algodat.Test
     // Insert, Search, Remove are tested in HashTableTest already.
     // Here we only need to test Minimum and Maximum.
     [TestFixture(typeof(BinarySearchTree<int, string>))]
+    [TestFixture(typeof(RedBlackTree<int, string>))]
     public class TreeTest<T> where T : ITree<int, string>, new()
     {
         [DatapointSource]
