@@ -3,10 +3,17 @@ using System.Collections.Generic;
 
 namespace Algodat.Trees
 {
+    /// <summary>
+    /// We put this in an extra class, to avoid generating one instance for every set
+    /// of type parameters of the generic BinarySearchTree class.
+    /// </summary>
+    internal static class Static
+    {
+        public static Random random = new();
+    }
+
     public class BinarySearchTree<TKey, TValue> : ITree<TKey, TValue> where TKey : IComparable<TKey>
     {
-        private static Random random = new();
-
         private class TreeNode
         {
             public TKey Key { get; }
@@ -111,7 +118,7 @@ namespace Algodat.Trees
                 // Here we can use either Left.Maximum() or Right.Minimum();
                 // We could use the same every time, but that increases the chance of
                 // getting an unbalanced tree, so instead we choose one at random.
-                return random.Next(0, 2) == 0
+                return Static.random.Next(0, 2) == 0
                     ? Left.Maximum()
                     : Right.Minimum();
             }
@@ -170,6 +177,7 @@ namespace Algodat.Trees
             {
                 throw new InvalidOperationException();
             }
+
             var node = root.Minimum();
             return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
         }
@@ -180,6 +188,7 @@ namespace Algodat.Trees
             {
                 throw new InvalidOperationException();
             }
+
             var node = root.Maximum();
             return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
         }
