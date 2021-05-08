@@ -19,6 +19,10 @@ namespace Algodat.SortAlgorithms
                 return;
             }
 
+            // We divide the array in two buckets depending on whether our bit is set or not.
+            // Smaller numbers go left, larger numbers go right.
+            // Here, i0 is the index *after* the end of the left bucket, 
+            // and i1 is the index *before* the start of the right bucket.
             int i0 = 0;
             int i1 = span.Length - 1;
 
@@ -37,6 +41,7 @@ namespace Algodat.SortAlgorithms
                 }
             }
 
+            // Recursively do this for all 32 bits.
             if (bitIndex > 0)
             {
                 SortInternal(span[..i0], bitIndex - 1);

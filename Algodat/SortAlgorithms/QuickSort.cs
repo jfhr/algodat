@@ -16,19 +16,27 @@ namespace Algodat.SortAlgorithms
                 return;
             }
 
+            // Choose an arbitrary array element as the pivot.
+            // For simplicity, we always use the last element.
+            // Some authors suggest using a random element instead
             int pivot = span[^1];
-            int i = -1;
+            
+            // We divide the array in two buckets: ( < pivot) and ( >= pivot)
+            // i is the first index of the second bucket.
+            int i = 0;
+            
             for (int j = 0; j < span.Length; j++)
             {
                 if (span[j] <= pivot)
                 {
-                    ArrayUtil.Swap(span, i + 1, j);
+                    ArrayUtil.Swap(span, i, j);
                     i++;
                 }
             }
 
-            var left = span[..i];
-            var right = span[(i + 1)..];
+            // Recursively sort both buckets
+            var left = span[..(i-1)];
+            var right = span[i..];
 
             SortInternal(left);
             SortInternal(right);
