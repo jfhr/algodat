@@ -22,13 +22,13 @@ namespace Algodat.SortAlgorithms
             int i0 = 0;
             int i1 = span.Length - 1;
 
-            for (int i = 0; i0 <= i1; i = i0)
+            while (i0 <= i1)
             {
                 // Because ints are signed, the sign bit (bitIndex == 31)
                 // must be treated opposite to the other bits
-                if (bitIndex == 31 != IsBitSet(span[i], bitIndex))
+                if (bitIndex == 31 != IsBitSet(span[i0], bitIndex))
                 {
-                    ArrayUtil.Swap(span, i, i1);
+                    ArrayUtil.Swap(span, i0, i1);
                     i1--;
                 }
                 else
