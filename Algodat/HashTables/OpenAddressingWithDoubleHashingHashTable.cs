@@ -1,4 +1,6 @@
-﻿namespace Algodat.HashTables
+﻿using System;
+
+namespace Algodat.HashTables
 {
     // Double hashing on generic values doesn't really work because generic values
     // only have one GetHashCode() function.
@@ -31,7 +33,7 @@
         private Node[] _array;
         private int _count;
 
-        private double LoadFactor => (double) _count / _array.Length;
+        private double LoadFactor => _count / _array.Length;
 
         private const double MaxLoadFactor = 0.55;
         private const double LowLoadFactor = 0.2;
@@ -42,11 +44,11 @@
             _array = new Node[4];
         }
 
-        private int Hash(int key, int i) => H1(key) + i * H2(key);
+        private int Hash(int key, int i) => Math.Abs((H1(key) + i * H2(key)) % _array.Length);
 
         private int H1(int key) => key % _array.Length;
 
-        private int H2(int key) => (key % (_array.Length - 1)) + 1;
+        private int H2(int key) => key % (_array.Length - 1) + 1;
 
         /// <summary>
         /// Change array size to a new value and re-insert all items.
@@ -84,7 +86,6 @@
         /// Searches for the key and returns its index. If the key is 
         /// not found, returns the index where it would be inserted.
         /// </summary>
-        /// <param name="skipDeleteMe">Whether to skip nodes marked as DeleteMe</param>
         private int FindIndex(int key, bool skipDeleteMe)
         {
             for (int i = 0;; i++)

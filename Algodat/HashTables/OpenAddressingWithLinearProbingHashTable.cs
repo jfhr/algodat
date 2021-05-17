@@ -45,9 +45,8 @@
         {
             var oldArray = _array;
             _array = new Node[newSize];
-            for (int i = 0; i < oldArray.Length; i++)
+            foreach (var node in oldArray)
             {
-                var node = oldArray[i];
                 if (node != null && node.State != NodeState.DeleteMe)
                 {
                     Insert(node.Key, node.Value);
