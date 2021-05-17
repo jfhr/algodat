@@ -7,32 +7,32 @@
             CreateInstance(array).SortAscending();
         }
 
-        private Instance CreateInstance(int[] array) => new(array);
+        private static Instance CreateInstance(int[] array) => new(array);
 
         private class Instance
         {
-            private readonly int[] array;
+            private readonly int[] _array;
 
             /// <summary>
             /// Size of the heap, this is also the smallest index in the array
             /// that is not itself part of the heap.
             /// </summary>
-            private int heapSize;
+            private int _heapSize;
 
             public Instance(int[] array)
             {
-                this.array = array;
-                heapSize = array.Length;
+                this._array = array;
+                _heapSize = array.Length;
             }
 
             public void SortAscending()
             {
                 BuildMaxHeap();
 
-                while (heapSize > 1)
+                while (_heapSize > 1)
                 {
-                    Swap(0, heapSize - 1);
-                    heapSize--;
+                    Swap(0, _heapSize - 1);
+                    _heapSize--;
                     MaxHeapify(0);
                 }
             }
@@ -42,7 +42,7 @@
             /// </summary>
             private void BuildMaxHeap()
             {
-                for (int i = array.Length / 2; i >= 0; i--)
+                for (int i = _array.Length / 2; i >= 0; i--)
                 {
                     MaxHeapify(i);
                 }
@@ -55,15 +55,15 @@
             private void MaxHeapify(int index)
             {
                 int left = index * 2 + 1;
-                if (left >= heapSize)
+                if (left >= _heapSize)
                 {
                     return;
                 }
 
                 int right = left + 1;
-                if (right >= heapSize || array[left] >= array[right])
+                if (right >= _heapSize || _array[left] >= _array[right])
                 {
-                    if (array[index] < array[left])
+                    if (_array[index] < _array[left])
                     {
                         Swap(index, left);
                         MaxHeapify(left);
@@ -71,7 +71,7 @@
                 }
                 else
                 {
-                    if (array[index] < array[right])
+                    if (_array[index] < _array[right])
                     {
                         Swap(index, right);
                         MaxHeapify(right);
@@ -79,7 +79,7 @@
                 }
             }
 
-            private void Swap(int a, int b) => ArrayUtil.Swap(array, a, b);
+            private void Swap(int a, int b) => ArrayUtil.Swap(_array, a, b);
         }
     }
 }

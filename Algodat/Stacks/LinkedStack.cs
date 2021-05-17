@@ -10,33 +10,33 @@ namespace Algodat.Stacks
             public T Value { get; set; }
         }
 
-        private Node top;
+        private Node _top;
 
         public T Peek()
         {
-            if (top == null)
+            if (_top == null)
             {
                 throw new InvalidOperationException();
             }
 
-            return top.Value;
+            return _top.Value;
         }
 
         public T Pop()
         {
             var returnValue = Peek();
-            top = top.Previous;
+            _top = _top.Previous;
             return returnValue;
         }
 
         public void Push(T value)
         {
             var newNode = new Node { Value = value };
-            if (top != null)
+            if (_top != null)
             {
-                newNode.Previous = top;
+                newNode.Previous = _top;
             }
-            top = newNode;
+            _top = newNode;
         }
     }
 }

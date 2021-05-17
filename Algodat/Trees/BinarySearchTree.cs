@@ -3,16 +3,7 @@ using System.Collections.Generic;
 
 namespace Algodat.Trees
 {
-    /// <summary>
-    /// We put this in an extra class, to avoid generating one instance for every set
-    /// of type parameters of the generic BinarySearchTree class.
-    /// </summary>
-    internal static class Static
-    {
-        public static Random random = new();
-    }
-
-    public class BinarySearchTree<TKey, TValue> : ITree<TKey, TValue> where TKey : IComparable<TKey>
+    public class BinarySearchTree<TKey, TValue> : ITree<TKey, TValue> where TKey : IComparable<TKey> where TValue : class
     {
         private class TreeNode
         {
@@ -27,14 +18,13 @@ namespace Algodat.Trees
                 Value = value;
             }
 
-            public bool Search(TKey key, out TValue value)
+            public TValue Search(TKey key)
             {
-                value = Value;
                 return key.CompareTo(Key) switch
                 {
-                    < 0 => Left?.Search(key, out value) ?? false,
-                    0 => true,
-                    > 0 => Right?.Search(key, out value) ?? false,
+                    < 0 => Left?.Search(key),
+                    > 0 => Right?.Search(key),
+                    0 => Value
                 };
             }
 
@@ -118,7 +108,7 @@ namespace Algodat.Trees
                 // Here we can use either Left.Maximum() or Right.Minimum();
                 // We could use the same every time, but that increases the chance of
                 // getting an unbalanced tree, so instead we choose one at random.
-                return Static.random.Next(0, 2) == 0
+                return Shared.Random.Next(0, 2) == 0
                     ? Left.Maximum()
                     : Right.Minimum();
             }
@@ -127,30 +117,29 @@ namespace Algodat.Trees
             public TreeNode Maximum() => Right?.Maximum() ?? this;
         }
 
-        private TreeNode root;
+        private TreeNode _root;
 
-        private bool IsEmpty => root == null;
+        private bool IsEmpty => _root == null;
 
-        public bool Search(TKey key, out TValue value)
+        public TValue Search(TKey key)
         {
             if (IsEmpty)
             {
-                value = default;
-                return false;
+                return null;
             }
 
-            return root.Search(key, out value);
+            return _root.Search(key);
         }
 
         public void Insert(TKey key, TValue value)
         {
             if (IsEmpty)
             {
-                root = new TreeNode(key, value);
+                _root = new TreeNode(key, value);
             }
             else
             {
-                root.Insert(key, value);
+                _root.Insert(key, value);
             }
         }
 
@@ -161,13 +150,13 @@ namespace Algodat.Trees
                 return;
             }
 
-            if (key.CompareTo(root.Key) == 0)
+            if (key.CompareTo(_root.Key) == 0)
             {
-                root = root.Heir();
+                _root = _root.Heir();
             }
             else
             {
-                root.RemoveFromChildren(key);
+                _root.RemoveFromChildren(key);
             }
         }
 
@@ -178,7 +167,7 @@ namespace Algodat.Trees
                 throw new InvalidOperationException();
             }
 
-            var node = root.Minimum();
+            var node = _root.Minimum();
             return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
         }
 
@@ -189,7 +178,7 @@ namespace Algodat.Trees
                 throw new InvalidOperationException();
             }
 
-            var node = root.Maximum();
+            var node = _root.Maximum();
             return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
         }
     }

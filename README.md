@@ -5,23 +5,24 @@
 Algorithms and data structures from my university course.
 
 Currently implemented:
-- Collections
-  - Array stack
-  - Linked stack
-  - Array queue
-  - Linked queue
-- Sort algorithms
-  - Bubble sort
-  - Insertion sort
-  - Heap sort
-  - Merge sort
-  - Quick sort
-  - Radix sort
-- Hashtables
-  - Linked hashtable
-  - Open addressing
-    - Linear probing
-    - Quadratic probing
-    - Double hashing
-- Trees
-  - Binary search tree
+
+*   Collections
+    *   Array stack
+    *   Linked stack
+    *   Array queue
+    *   Linked queue
+*   Sort algorithms
+    *   Bubble sort
+    *   Insertion sort
+    *   Heap sort
+    *   Merge sort
+    *   Quick sort
+    *   Radix sort
+*   Hashtables
+    *   Linked hashtable
+    *   Open addressing
+        *   Linear probing
+        *   Quadratic probing
+        *   Double hashing
+*   Trees
+    *   Binary search tree

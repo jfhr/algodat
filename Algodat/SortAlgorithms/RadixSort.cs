@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Algodat.SortAlgorithms
 {
@@ -12,7 +11,7 @@ namespace Algodat.SortAlgorithms
         // bitIndex = 31 is the most significant bit
         public void SortAscending(int[] array) => SortInternal(array.AsSpan(), 31);
 
-        private void SortInternal(Span<int> span, int bitIndex)
+        private static void SortInternal(Span<int> span, int bitIndex)
         {
             if (span.Length <= 1)
             {
@@ -49,7 +48,7 @@ namespace Algodat.SortAlgorithms
             }
         }
 
-        private bool IsBitSet(int value, int bitIndex)
+        private static bool IsBitSet(int value, int bitIndex)
         {
             return ((value >> bitIndex) & 1) == 1;
         }

@@ -65,7 +65,6 @@ namespace Algodat.SortAlgorithms
                     rightIndex++;
                 }
             }
-            
         }
 
         private int[] Copy(Span<int> span)
