@@ -1,15 +1,12 @@
 ﻿namespace Algodat.HashTables
 {
-    public interface IHashTable<TKey, TValue>
+    public interface IHashTable<in TKey, TValue> where TValue : class
     {
         /// <summary>
-        /// Find the value associated with the <paramref name="key"/>.
-        /// If the search is successful, returns true and sets the out
-        /// parameter to the associated value.
-        /// Otherwise, returns false, in that case, the out parameter
-        /// may be set to any value.
+        /// Return the value associated with the <paramref name="key"/>,
+        /// or <see langword="null"/> if it was not found.
         /// </summary>
-        public bool Search(TKey key, out TValue value);
+        public TValue Search(TKey key);
 
         /// <summary>
         /// Insert the given key-value-pair.

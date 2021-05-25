@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Algodat.SortAlgorithms
 {
@@ -12,23 +11,27 @@ namespace Algodat.SortAlgorithms
         // bitIndex = 31 is the most significant bit
         public void SortAscending(int[] array) => SortInternal(array.AsSpan(), 31);
 
-        private void SortInternal(Span<int> span, int bitIndex)
+        private static void SortInternal(Span<int> span, int bitIndex)
         {
             if (span.Length <= 1)
             {
                 return;
             }
 
+            // We divide the array in two buckets depending on whether our bit is set or not.
+            // Smaller numbers go left, larger numbers go right.
+            // Here, i0 is the index *after* the end of the left bucket, 
+            // and i1 is the index *before* the start of the right bucket.
             int i0 = 0;
             int i1 = span.Length - 1;
 
-            for (int i = 0; i0 <= i1; i = i0)
+            while (i0 <= i1)
             {
                 // Because ints are signed, the sign bit (bitIndex == 31)
                 // must be treated opposite to the other bits
-                if (bitIndex == 31 != IsBitSet(span[i], bitIndex))
+                if (bitIndex == 31 != IsBitSet(span[i0], bitIndex))
                 {
-                    ArrayUtil.Swap(span, i, i1);
+                    ArrayUtil.Swap(span, i0, i1);
                     i1--;
                 }
                 else
@@ -37,6 +40,7 @@ namespace Algodat.SortAlgorithms
                 }
             }
 
+            // Recursively do this for all 32 bits.
             if (bitIndex > 0)
             {
                 SortInternal(span[..i0], bitIndex - 1);
@@ -44,7 +48,7 @@ namespace Algodat.SortAlgorithms
             }
         }
 
-        private bool IsBitSet(int value, int bitIndex)
+        private static bool IsBitSet(int value, int bitIndex)
         {
             return ((value >> bitIndex) & 1) == 1;
         }

@@ -1,6 +1,7 @@
 ﻿namespace Algodat.HashTables
 {
     public class OpenAddressingWithQuadraticProbingHashTable<TKey, TValue> : IHashTable<TKey, TValue>
+        where TValue : class
     {
         private class Node
         {
@@ -16,12 +17,16 @@
             }
         }
 
-        private enum NodeState { Normal, DeleteMe }
+        private enum NodeState
+        {
+            Normal,
+            DeleteMe
+        }
 
-        private Node[] array;
-        private int count;
+        private Node[] _array;
+        private int _count;
 
-        private double LoadFactor => count / array.Length;
+        private double LoadFactor => (double) _count / _array.Length;
 
         private const double MaxLoadFactor = 0.55;
         private const double LowLoadFactor = 0.2;
@@ -32,21 +37,20 @@
 
         public OpenAddressingWithQuadraticProbingHashTable()
         {
-            array = new Node[4];
+            _array = new Node[4];
         }
 
-        private int Hash(TKey key, int i) => (key.GetHashCode() + C1 * i + C2 * i * i) % array.Length;
+        private int Hash(TKey key, int i) => (key.GetHashCode() + C1 * i + C2 * i * i) % _array.Length;
 
         /// <summary>
         /// Change array size to a new value and re-insert all items.
         /// </summary>
         private void ChangeArraySize(int newSize)
         {
-            var oldArray = array;
-            array = new Node[newSize];
-            for (int i = 0; i < oldArray.Length; i++)
+            var oldArray = _array;
+            _array = new Node[newSize];
+            foreach (var node in oldArray)
             {
-                var node = oldArray[i];
                 if (node != null && node.State != NodeState.DeleteMe)
                 {
                     Insert(node.Key, node.Value);
@@ -59,7 +63,7 @@
         /// </summary>
         private void ExpandArray()
         {
-            ChangeArraySize(array.Length * 2);
+            ChangeArraySize(_array.Length * 2);
         }
 
         /// <summary>
@@ -67,7 +71,7 @@
         /// </summary>
         private void ShrinkArray()
         {
-            ChangeArraySize(array.Length / 2);
+            ChangeArraySize(_array.Length / 2);
         }
 
         /// <summary>
@@ -76,14 +80,15 @@
         /// </summary>
         private int FindIndex(TKey key, bool skipDeleteMe)
         {
-            for (int i = 0; ; i++)
+            for (int i = 0;; i++)
             {
                 int index = Hash(key, i);
-                var node = array[index];
+                var node = _array[index];
                 if (node == null)
                 {
                     return index;
                 }
+
                 if (Equals(node.Key, key) && (node.State != NodeState.DeleteMe || !skipDeleteMe))
                 {
                     return index;
@@ -96,18 +101,18 @@
             int index = FindIndex(key, false);
 
             // If the key is already in the table, just override the value
-            if (array[index] != null)
+            if (_array[index] != null)
             {
-                array[index].Value = value;
-                array[index].State = NodeState.Normal;
+                _array[index].Value = value;
+                _array[index].State = NodeState.Normal;
             }
 
             // Otherwise, insert a new node
             else
             {
-                array[index] = new Node(key, value);
+                _array[index] = new Node(key, value);
 
-                count++;
+                _count++;
                 if (LoadFactor > MaxLoadFactor)
                 {
                     ExpandArray();
@@ -119,13 +124,13 @@
         {
             int index = FindIndex(key, true);
 
-            if (array[index] != null)
+            if (_array[index] != null)
             {
-                array[index].State = NodeState.DeleteMe;
+                _array[index].State = NodeState.DeleteMe;
 
                 // Shrink array if load gets low.
                 // This isn't strictly necessary, but reduces memory load
-                count--;
+                _count--;
                 if (LoadFactor < LowLoadFactor)
                 {
                     ShrinkArray();
@@ -133,20 +138,10 @@
             }
         }
 
-        public bool Search(TKey key, out TValue value)
+        public TValue Search(TKey key)
         {
-            var node = array[FindIndex(key, true)];
-
-            if (node == null)
-            {
-                value = default;
-                return false;
-            }
-            else
-            {
-                value = node.Value;
-                return true;
-            }
+            var node = _array[FindIndex(key, true)];
+            return node?.Value;
         }
     }
 }

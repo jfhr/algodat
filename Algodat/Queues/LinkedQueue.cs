@@ -11,36 +11,36 @@ namespace Algodat.Queues
             public T Value { get; set; }
         }
 
-        private Node start;
-        private Node end;
+        private Node _start;
+        private Node _end;
 
         public T Dequeue()
         {
             var returnValue = Peek();
-            end = end.Previous;
+            _end = _end.Previous;
             return returnValue;
         }
 
         public void Enqueue(T value)
         {
             var newNode = new Node { Value = value };
-            if (start != null)
+            if (_start != null)
             {
-                newNode.Next = start;
-                start.Previous = newNode;
+                newNode.Next = _start;
+                _start.Previous = newNode;
             }
-            start = newNode;
-            end ??= newNode;
+            _start = newNode;
+            _end ??= newNode;
         }
 
         public T Peek()
         {
-            if (end is null)
+            if (_end is null)
             {
                 throw new InvalidOperationException();
             }
 
-            return end.Value;
+            return _end.Value;
         }
     }
 }

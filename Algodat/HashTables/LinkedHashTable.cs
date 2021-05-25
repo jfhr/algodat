@@ -1,6 +1,6 @@
 ﻿namespace Algodat.HashTables
 {
-    public class LinkedHashTable<TKey, TValue> : IHashTable<TKey, TValue>
+    public class LinkedHashTable<TKey, TValue> : IHashTable<TKey, TValue> where TValue : class
     {
         private class Node
         {
@@ -16,22 +16,22 @@
             }
         }
 
-        private Node[] array;
-        private int count;
+        private Node[] _array;
+        private int _count;
 
-        private double LoadFactor => count / array.Length;
+        private double LoadFactor => _count / _array.Length;
 
         private const double MaxLoadFactor = 0.75;
         private const double LowLoadFactor = 0.2;
 
         public LinkedHashTable()
         {
-            array = new Node[4];
+            _array = new Node[4];
         }
 
         private int Hash(TKey key)
         {
-            return (int)((uint)key!.GetHashCode() % (uint)array.Length);
+            return (int)((uint)key!.GetHashCode() % (uint)_array.Length);
         }
 
         /// <summary>
@@ -39,8 +39,8 @@
         /// </summary>
         private void ChangeArraySize(int newSize)
         {
-            var oldArray = array;
-            array = new Node[newSize];
+            var oldArray = _array;
+            _array = new Node[newSize];
             for (int i = 0; i < oldArray.Length; i++)
             {
                 var node = oldArray[i];
@@ -57,7 +57,7 @@
         /// </summary>
         private void ExpandArray()
         {
-            ChangeArraySize(array.Length * 2);
+            ChangeArraySize(_array.Length * 2);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@
         /// </summary>
         private void ShrinkArray()
         {
-            ChangeArraySize(array.Length / 2);
+            ChangeArraySize(_array.Length / 2);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@
         private (int Hash, Node prevNode, Node Node) FindNode(TKey key)
         {
             int hash = Hash(key);
-            var node = array[hash];
+            var node = _array[hash];
             Node prevNode = null;
             while (node != null && !Equals(key, node.Key))
             {
@@ -98,9 +98,9 @@
             // Otherwise, insert a new node
             else
             {
-                array[hash] = new Node(array[hash], key, value);
+                _array[hash] = new Node(_array[hash], key, value);
 
-                count++;
+                _count++;
                 if (LoadFactor > MaxLoadFactor)
                 {
                     ExpandArray();
@@ -111,42 +111,33 @@
         public void Remove(TKey key)
         {
             var (hash, prevNode, node) = FindNode(key);
-
-            if (node != null) 
-            { 
-                if (prevNode == null)
-                {
-                    array[hash] = node.Next;
-                }
-                else
-                {
-                    prevNode.Next = node.Next;
-                }
-
-                // Shrink array if load gets low.
-                // This isn't strictly necessary, but reduces memory load
-                count--;
-                if (LoadFactor < LowLoadFactor)
-                {
-                    ShrinkArray();
-                }
-            }
-        }
-
-        public bool Search(TKey key, out TValue value)
-        {
-            var (_, _, node) = FindNode(key);
-
             if (node == null)
             {
-                value = default;
-                return false;
+                return;
+            }
+            
+            if (prevNode == null)
+            {
+                _array[hash] = node.Next;
             }
             else
             {
-                value = node.Value;
-                return true;
+                prevNode.Next = node.Next;
             }
+
+            // Shrink array if load gets low.
+            // This isn't strictly necessary, but reduces memory load
+            _count--;
+            if (LoadFactor < LowLoadFactor)
+            {
+                ShrinkArray();
+            }
+        }
+
+        public TValue Search(TKey key)
+        {
+            var (_, _, node) = FindNode(key);
+            return node?.Value;
         }
     }
 }

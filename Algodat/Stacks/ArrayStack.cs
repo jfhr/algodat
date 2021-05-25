@@ -4,28 +4,28 @@ namespace Algodat.Stacks
 {
     public class ArrayStack<T> : IStack<T>
     {
-        private T[] array;
+        private T[] _array;
 
         // index of the last active element
-        private int end;
+        private int _end;
 
         public ArrayStack()
         {
-            array = Array.Empty<T>();
-            end = -1;
+            _array = Array.Empty<T>();
+            _end = -1;
         }
 
-        private bool IsEmpty => end == -1;
+        private bool IsEmpty => _end == -1;
 
         private void IncreaseCapacity()
         {
             // We are already using the full array, so we need a bigger one
-            var newLength = array.Length == 0
+            var newLength = _array.Length == 0
                 ? 4
-                : array.Length * 2;
+                : _array.Length * 2;
             var newArray = new T[newLength];
-            Array.Copy(array, newArray, end);
-            array = newArray;
+            Array.Copy(_array, newArray, _end);
+            _array = newArray;
         }
 
         public T Peek()
@@ -34,7 +34,7 @@ namespace Algodat.Stacks
             {
                 throw new InvalidOperationException();
             }
-            return array[end];
+            return _array[_end];
         }
 
         public T Pop()
@@ -44,19 +44,19 @@ namespace Algodat.Stacks
                 throw new InvalidOperationException();
             }
 
-            T value = array[end];
-            end--;
+            T value = _array[_end];
+            _end--;
             return value;
         }
 
         public void Push(T value)
         {
-            end++;
-            if (end >= array.Length)
+            _end++;
+            if (_end >= _array.Length)
             {
                 IncreaseCapacity();
             }
-            array[end] = value;
+            _array[_end] = value;
         }
     }
 }
