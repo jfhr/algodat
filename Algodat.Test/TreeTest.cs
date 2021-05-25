@@ -32,11 +32,11 @@ namespace Algodat.Test
                 instance.Insert(value, value.ToString());
             }
 
-            Assert.AreEqual(expectedMin, instance.Minimum().Key);
-            Assert.AreEqual(expectedMin.ToString(), instance.Minimum().Value);
+            Assert.AreEqual(expectedMin, instance.Minimum()?.Key);
+            Assert.AreEqual(expectedMin.ToString(), instance.Minimum()?.Value);
 
-            Assert.AreEqual(expectedMax, instance.Maximum().Key);
-            Assert.AreEqual(expectedMax.ToString(), instance.Maximum().Value);
+            Assert.AreEqual(expectedMax, instance.Maximum()?.Key);
+            Assert.AreEqual(expectedMax.ToString(), instance.Maximum()?.Value);
         }
     }
 }

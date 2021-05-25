@@ -160,22 +160,22 @@ namespace Algodat.Trees
             }
         }
 
-        public KeyValuePair<TKey, TValue> Minimum()
+        public KeyValuePair<TKey, TValue>? Minimum()
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException();
+                return null;
             }
 
             var node = _root.Minimum();
             return new KeyValuePair<TKey, TValue>(node.Key, node.Value);
         }
 
-        public KeyValuePair<TKey, TValue> Maximum()
+        public KeyValuePair<TKey, TValue>? Maximum()
         {
             if (IsEmpty)
             {
-                throw new InvalidOperationException();
+                return null;
             }
 
             var node = _root.Maximum();
