@@ -40,5 +40,15 @@ namespace Algodat.Test
             Assert.AreEqual(expectedMax, instance.Maximum()?.Key);
             Assert.AreEqual(expectedMax.ToString(), instance.Maximum()?.Value);
         }
+
+        [Theory]
+        public void TestInsertOnly(int[] values)
+        {
+            var instance = new T();
+            foreach (int value in values)
+            {
+                instance.Insert(value, value.ToString());
+            }
+        }
     }
 }

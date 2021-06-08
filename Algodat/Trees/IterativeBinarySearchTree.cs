@@ -7,7 +7,8 @@ namespace Algodat.Trees
     /// <summary>
     /// Iterative variant.
     /// </summary>
-    public class IterativeBinarySearchTree<TKey, TValue> : ITree<TKey, TValue> where TKey : IComparable<TKey>
+    public class IterativeBinarySearchTree<TKey, TValue> : ITree<TKey, TValue>
+        where TKey : IComparable<TKey> where TValue : class
     {
         private class TreeNode
         {
@@ -27,7 +28,7 @@ namespace Algodat.Trees
 
         private bool IsEmpty => root == null;
 
-        public bool Search(TKey key, out TValue value)
+        public TValue Search(TKey key)
         {
             var current = root;
             while (current != null)
@@ -38,16 +39,14 @@ namespace Algodat.Trees
                         current = current.Left;
                         break;
                     case 0:
-                        value = current.Value;
-                        return true;
+                        return current.Value;
                     case > 0:
                         current = current.Right;
                         break;
                 }
             }
 
-            value = default;
-            return false;
+            return null;
         }
 
         public void Insert(TKey key, TValue value)
@@ -101,6 +100,7 @@ namespace Algodat.Trees
                 {
                     heir = heir.Right;
                 }
+
                 return heir;
             }
             else
@@ -110,9 +110,9 @@ namespace Algodat.Trees
                 {
                     heir = heir.Right;
                 }
+
                 return heir;
             }
-
         }
 
         public void Remove(TKey key)
@@ -157,7 +157,7 @@ namespace Algodat.Trees
             return;
         }
 
-        public KeyValuePair<TKey, TValue> Minimum()
+        public KeyValuePair<TKey, TValue>? Minimum()
         {
             var current = root;
             while (current?.Left != null)
@@ -167,13 +167,13 @@ namespace Algodat.Trees
 
             if (current == null)
             {
-                throw new InvalidOperationException();
+                return null;
             }
 
             return new KeyValuePair<TKey, TValue>(current.Key, current.Value);
         }
 
-        public KeyValuePair<TKey, TValue> Maximum()
+        public KeyValuePair<TKey, TValue>? Maximum()
         {
             var current = root;
             while (current?.Right != null)
@@ -183,7 +183,7 @@ namespace Algodat.Trees
 
             if (current == null)
             {
-                throw new InvalidOperationException();
+                return null;
             }
 
             return new KeyValuePair<TKey, TValue>(current.Key, current.Value);
