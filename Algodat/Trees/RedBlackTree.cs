@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.Serialization;
 using Algodat.SortAlgorithms;
 
 namespace Algodat.Trees
@@ -171,7 +172,11 @@ namespace Algodat.Trees
         /// </summary>
         private void RotateParent(TreeNode node)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             if (node.Parent == null)
             {
                 throw new ArgumentException("RotateParent called on node without parent");
@@ -338,7 +343,10 @@ namespace Algodat.Trees
         /// <exception cref="ArgumentNullException">toReplace is null</exception>
         private void ReplaceNode(TreeNode toReplace, TreeNode replacement)
         {
-            if (toReplace == null) throw new ArgumentNullException(nameof(toReplace));
+            if (toReplace == null)
+            {
+                throw new ArgumentNullException(nameof(toReplace));
+            }
 
             if (_root == toReplace)
             {
@@ -544,7 +552,7 @@ namespace Algodat.Trees
             // At this point, toDelete should have no children
             if (toDelete.Left != null || toDelete.Right != null)
             {
-                throw new Exception("toDelete failed to find leaf node");
+                throw new RedBlackTreeException("toDelete failed to find leaf node");
             }
 
             // If toDelete is red, just remove it.
@@ -624,7 +632,6 @@ namespace Algodat.Trees
                 RotateParent(sibling);
                 ExchangeColors(parent, sibling);
                 ToggleColor(distantNephew);
-                return;
             }
         }
 
@@ -663,7 +670,7 @@ namespace Algodat.Trees
         {
             if (IsRed(_root))
             {
-                throw new Exception("red-black rule violated: root was red");
+                throw new RedBlackTreeException("red-black rule violated: root was red");
             }
 
             int? blackHeight = null;
@@ -683,7 +690,7 @@ namespace Algodat.Trees
                 blackHeight ??= blackHeightHere;
                 if (blackHeight != blackHeightHere)
                 {
-                    throw new Exception(
+                    throw new RedBlackTreeException(
                         $"red-black rule violated: black-height at node {node.Key} " +
                         $"was {blackHeightHere}, was {blackHeight} somewhere else");
                 }
@@ -691,26 +698,26 @@ namespace Algodat.Trees
 
             if (node.Left != null && node.Left.Parent != node)
             {
-                throw new Exception(
+                throw new RedBlackTreeException(
                     $"tree rule violated: at node {node.Key}: node.Left.Parent != node");
             }
 
             if (node.Right != null && node.Right.Parent != node)
             {
-                throw new Exception(
+                throw new RedBlackTreeException(
                     $"tree rule violated: at node {node.Key}: node.Right.Parent != node");
             }
 
             if (IsRed(node.Left) && IsRed(node))
             {
-                throw new Exception(
+                throw new RedBlackTreeException(
                     $"red-black rule violated: node {node.Key} was red " +
                     $"and its left child {node.Left!.Key} was also red");
             }
 
             if (IsRed(node.Right) && IsRed(node))
             {
-                throw new Exception(
+                throw new RedBlackTreeException(
                     $"red-black rule violated: node {node.Key} was red " +
                     $"and its right child {node.Right!.Key} was also red");
             }
@@ -748,5 +755,27 @@ namespace Algodat.Trees
 #endif
 
         #endregion
+
+        [Serializable]
+        public class RedBlackTreeException : Exception
+        {
+            public RedBlackTreeException()
+            {
+            }
+
+            public RedBlackTreeException(string message) : base(message)
+            {
+            }
+
+            public RedBlackTreeException(string message, Exception inner) : base(message, inner)
+            {
+            }
+
+            protected RedBlackTreeException(
+                SerializationInfo info,
+                StreamingContext context) : base(info, context)
+            {
+            }
+        }
     }
 }
