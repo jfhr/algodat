@@ -93,7 +93,7 @@ namespace Algodat.Trees
             // If we have 2 children:
             // Use the maximum of the left subtree
             // or the minimum of the right subtree
-            if (Static.random.Next(0, 2) == 0)
+            if (Static.Random.Next(0, 2) == 0)
             {
                 var heir = n.Left;
                 while (heir.Right != null)
@@ -153,8 +153,6 @@ namespace Algodat.Trees
                         break;
                 }
             }
-
-            return;
         }
 
         public KeyValuePair<TKey, TValue>? Minimum()

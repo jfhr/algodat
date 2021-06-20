@@ -8,6 +8,6 @@ namespace Algodat
     /// </summary>
     internal static class Static
     {
-        public static Random random = new();
+        public static Random Random { get; } = new();
     }
 }

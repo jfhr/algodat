@@ -47,7 +47,11 @@ namespace Algodat.Trees
         /// </summary>
         private void ToggleColor(TreeNode node)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
+            if (node == null)
+            {
+                throw new ArgumentNullException(nameof(node));
+            }
+
             if (node.Color == Color.Black)
             {
                 node.Color = Color.Red;
@@ -63,8 +67,15 @@ namespace Algodat.Trees
         /// </summary>
         private void ExchangeColors(TreeNode n1, TreeNode n2)
         {
-            if (n1 == null) throw new ArgumentNullException(nameof(n1));
-            if (n2 == null) throw new ArgumentNullException(nameof(n2));
+            if (n1 == null)
+            {
+                throw new ArgumentNullException(nameof(n1));
+            }
+
+            if (n2 == null)
+            {
+                throw new ArgumentNullException(nameof(n2));
+            }
 
             var tmp = n1.Color;
             n1.Color = n2.Color;
@@ -76,9 +87,16 @@ namespace Algodat.Trees
         /// </summary>
         private TreeNode RightRotate(TreeNode root)
         {
-            if (root == null) throw new ArgumentNullException(nameof(root));
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             var pivot = root.Left;
-            if (pivot == null) throw new ArgumentException("Right rotate on node without left child");
+            if (pivot == null)
+            {
+                throw new ArgumentException("Right rotate on node without left child");
+            }
 
             ReplaceNode(root, pivot);
             root.Left = pivot.Right;
@@ -98,9 +116,16 @@ namespace Algodat.Trees
         /// </summary>
         private TreeNode LeftRotate(TreeNode root)
         {
-            if (root == null) throw new ArgumentNullException(nameof(root));
+            if (root == null)
+            {
+                throw new ArgumentNullException(nameof(root));
+            }
+
             var pivot = root.Right;
-            if (pivot == null) throw new ArgumentException("Left rotate on node without right child");
+            if (pivot == null)
+            {
+                throw new ArgumentException("Left rotate on node without right child");
+            }
 
             ReplaceNode(root, pivot);
             root.Right = pivot.Left;
@@ -715,7 +740,10 @@ namespace Algodat.Trees
 
 #else
 
-        private void VerifyRedBlackRules() { }
+        private void VerifyRedBlackRules() 
+        {
+            // Verification is turned off in release builds for improved performance
+        }
 
 #endif
 
