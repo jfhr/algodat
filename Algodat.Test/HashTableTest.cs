@@ -15,7 +15,7 @@ namespace Algodat.Test
     public class HashTableTest<T> where T : IHashTable<int, string>, new()
     {
         [DatapointSource]
-        public int[][] Arrays = new[]
+        private int[][] _arrays = new[]
         {
             new[] { 100 },
             new[] { 100, 200, 300 },

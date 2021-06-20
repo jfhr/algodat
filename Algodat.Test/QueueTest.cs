@@ -8,7 +8,7 @@ namespace Algodat.Test
     public class QueueTest<T> where T : IQueue<int>, new()
     {
         [DatapointSource]
-        public int[][] Arrays = new[]
+        private int[][] _arrays = new[]
         {
             new[] { 100 },
             new[] { 100, 200, 300 },

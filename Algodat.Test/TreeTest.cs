@@ -12,7 +12,7 @@ namespace Algodat.Test
     public class TreeTest<T> where T : ITree<int, string>, new()
     {
         [DatapointSource]
-        public int[][] Arrays = new[]
+        private int[][] _arrays = new[]
         {
             new[] { 100 },
             new[] { 100, 200, 300 },

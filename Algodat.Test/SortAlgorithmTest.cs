@@ -13,7 +13,7 @@ namespace Algodat.Test
     public class SortAlgorithmTest<T> where T : ISortAlgorithm, new()
     {
         [DatapointSource]
-        public int[][] Arrays = new[]
+        private int[][] _arrays = new[]
         {
             Array.Empty<int>(),
             new[] { 1 },
