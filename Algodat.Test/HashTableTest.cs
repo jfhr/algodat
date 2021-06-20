@@ -10,6 +10,8 @@ namespace Algodat.Test
     [TestFixture(typeof(OpenAddressingWithQuadraticProbingHashTable<int, string>))]
 
     [TestFixture(typeof(BinarySearchTree<int, string>))]
+    [TestFixture(typeof(IterativeBinarySearchTree<int, string>))]
+    [TestFixture(typeof(RedBlackTree<int, string>))]
     public class HashTableTest<T> where T : IHashTable<int, string>, new()
     {
         [DatapointSource]
@@ -17,7 +19,8 @@ namespace Algodat.Test
         {
             new[] { 100 },
             new[] { 100, 200, 300 },
-            new[] { 300, 200, 300, 200 }
+            new[] { 300, 200, 300, 200 },
+            new[] { 300, 200, 100, 150, 250, 350, 125, 225 }
         };
 
         private void AssertSearchResult(IHashTable<int, string> instance, int key, string expectedValue)
@@ -37,13 +40,13 @@ namespace Algodat.Test
         {
             var instance = new T();
 
-            for (int i = 0; i < elements.Length; i++)
+            foreach (var i in elements)
             {
                 instance.Insert(i, $"{i}");
                 AssertSearchResult(instance, i, $"{i}");
             }
 
-            for (int i = 0; i < elements.Length; i++)
+            foreach (var i in elements)
             {
                 instance.Remove(i);
                 AssertSearchResult(instance, i, null);
@@ -85,10 +88,6 @@ namespace Algodat.Test
             for (int i = 0; i < 400; i++)
             {
                 instance.Insert(i, $"{i}-value");
-            }
-
-            for (int i = 0; i < 400; i++)
-            {
                 AssertSearchResult(instance, i, $"{i}-value");
             }
         }

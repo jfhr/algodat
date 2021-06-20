@@ -7,6 +7,8 @@ namespace Algodat.Test
     // Insert, Search, Remove are tested in HashTableTest already.
     // Here we only need to test Minimum and Maximum.
     [TestFixture(typeof(BinarySearchTree<int, string>))]
+    [TestFixture(typeof(IterativeBinarySearchTree<int, string>))]
+    [TestFixture(typeof(RedBlackTree<int, string>))]
     public class TreeTest<T> where T : ITree<int, string>, new()
     {
         [DatapointSource]
@@ -37,6 +39,16 @@ namespace Algodat.Test
 
             Assert.AreEqual(expectedMax, instance.Maximum()?.Key);
             Assert.AreEqual(expectedMax.ToString(), instance.Maximum()?.Value);
+        }
+
+        [Theory]
+        public void TestInsertOnly(int[] values)
+        {
+            var instance = new T();
+            foreach (int value in values)
+            {
+                instance.Insert(value, value.ToString());
+            }
         }
     }
 }
