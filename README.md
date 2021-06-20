@@ -26,3 +26,4 @@ Currently implemented:
         *   Double hashing
 *   Trees
     *   Binary search tree
+    *   Red-Black tree
